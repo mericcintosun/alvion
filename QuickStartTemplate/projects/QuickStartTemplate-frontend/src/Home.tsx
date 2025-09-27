@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react'
 import { useWallet } from '@txnlab/use-wallet-react'
-import { AiOutlineSend, AiOutlineStar, AiOutlineDeploymentUnit } from 'react-icons/ai'
+import { AiOutlineSend, AiOutlineStar, AiOutlineDeploymentUnit, AiOutlineRobot } from 'react-icons/ai'
 import { BsArrowUpRightCircle, BsWallet2 } from 'react-icons/bs'
 
 // Frontend modals
@@ -13,6 +13,7 @@ import Transact from './components/Transact'
 import NFTmint from './components/NFTmint'
 import Tokenmint from './components/Tokenmint'
 import DarkModeToggle from './components/DarkModeToggle'
+import ChatBot from './components/ChatBot'
 
 // Smart contract demo modal (backend app calls)
 import AppCalls from './components/AppCalls'
@@ -25,6 +26,7 @@ const Home: React.FC<HomeProps> = () => {
   const [openMintModal, setOpenMintModal] = useState<boolean>(false)
   const [openTokenModal, setOpenTokenModal] = useState<boolean>(false)
   const [openAppCallsModal, setOpenAppCallsModal] = useState<boolean>(false)
+  const [openChatModal, setOpenChatModal] = useState<boolean>(false)
 
   const { activeAddress } = useWallet()
 
@@ -35,6 +37,13 @@ const Home: React.FC<HomeProps> = () => {
         <h1 className="text-xl font-bold text-alvion-primary-100 dark:text-alvion-primary-dark-100">Alvion</h1>
         <div className="flex items-center gap-3">
           <DarkModeToggle />
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-alvion bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 hover:bg-alvion-neutral-light-70 dark:hover:bg-alvion-neutral-dark-70 text-sm font-semibold text-alvion-primary-100 dark:text-alvion-primary-dark-100 transition-colors duration-200"
+            onClick={() => setOpenChatModal(true)}
+          >
+            <AiOutlineRobot size={20} color="#2D2DF1" />
+            <span>AI Assistant</span>
+          </button>
           <button
             className="flex items-center gap-2 px-4 py-2 rounded-alvion bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 hover:bg-alvion-neutral-light-70 dark:hover:bg-alvion-neutral-dark-70 text-sm font-semibold text-alvion-primary-100 dark:text-alvion-primary-dark-100 transition-colors duration-200"
             onClick={() => setOpenWalletModal(true)}
@@ -136,6 +145,7 @@ const Home: React.FC<HomeProps> = () => {
       <NFTmint openModal={openMintModal} setModalState={setOpenMintModal} />
       <Tokenmint openModal={openTokenModal} setModalState={setOpenTokenModal} />
       <AppCalls openModal={openAppCallsModal} setModalState={setOpenAppCallsModal} />
+      <ChatBot openModal={openChatModal} setModalState={setOpenChatModal} />
     </div>
   )
 }

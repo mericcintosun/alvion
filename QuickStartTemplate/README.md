@@ -5,6 +5,7 @@ This starter full stack project has been generated using AlgoKit. See below for 
 ## Setup
 
 ### Initial setup
+
 1. Clone this repository to your local machine.
 2. Ensure [Docker](https://www.docker.com/) is installed and operational. Then, install `AlgoKit` following this [guide](https://github.com/algorandfoundation/algokit-cli#install).
 3. Run `algokit project bootstrap all` in the project directory. This command sets up your environment by installing necessary dependencies, setting up a Python virtual environment, and preparing your `.env` file.
@@ -13,6 +14,7 @@ This starter full stack project has been generated using AlgoKit. See below for 
 6. For project-specific instructions, refer to the READMEs of the child projects:
    - Smart Contracts: [QuickStartTemplate-contracts](projects/QuickStartTemplate-contracts/README.md)
    - Frontend Application: [QuickStartTemplate-frontend](projects/QuickStartTemplate-frontend/README.md)
+   - Gemini AI Backend: [QuickStartTemplate-gemini-backend](projects/QuickStartTemplate-gemini-backend/README.md) (NEW!)
 
 > This project is structured as a monorepo, refer to the [documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/project/run.md) to learn more about custom command orchestration via `algokit project run`.
 
@@ -26,8 +28,9 @@ This starter full stack project has been generated using AlgoKit. See below for 
 This project uses [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to define CI/CD workflows, which are located in the [`.github/workflows`](./.github/workflows) folder. You can configure these actions to suit your project's needs, including CI checks, audits, linting, type checking, testing, and deployments to TestNet.
 
 For pushes to `main` branch, after the above checks pass, the following deployment actions are performed:
-  - The smart contract(s) are deployed to TestNet using [AlgoNode](https://algonode.io).
-  - The frontend application is deployed to a provider of your choice (Netlify, Vercel, etc.). See [frontend README](frontend/README.md) for more information.
+
+- The smart contract(s) are deployed to TestNet using [AlgoNode](https://algonode.io).
+- The frontend application is deployed to a provider of your choice (Netlify, Vercel, etc.). See [frontend README](frontend/README.md) for more information.
 
 > Please note deployment of smart contracts is done via `algokit deploy` command which can be invoked both via CI as seen on this project, or locally. For more information on how to use `algokit deploy` please see [AlgoKit documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/deploy.md).
 
@@ -49,6 +52,25 @@ Refer to the [QuickStartTemplate-contracts](projects/QuickStartTemplate-contract
 When you compile and generate smart contract artifacts, your frontend component will automatically generate typescript application clients from smart contract artifacts and move them to `frontend/src/contracts` folder, see [`generate:app-clients` in package.json](projects/QuickStartTemplate-frontend/package.json). Afterwards, you are free to import and use them in your frontend application.
 
 The frontend starter also provides an example of interactions with your HelloWorldClient in [`AppCalls.tsx`](projects/QuickStartTemplate-frontend/src/components/AppCalls.tsx) component by default.
+
+## New Features
+
+### 🤖 AI-Powered Chat Assistant
+
+This project now includes a Gemini AI backend service that provides:
+
+- **Intelligent Chat Interface** - Ask questions about Algorand, DeFi, smart contracts, and NFTs
+- **Streaming Responses** - Real-time AI responses using Server-Sent Events
+- **Specialized Knowledge** - Trained specifically for Algorand and DeFi topics
+- **Seamless Integration** - Fully integrated with the existing UI design system
+
+To use the AI assistant:
+
+1. Start the Gemini backend: `cd projects/QuickStartTemplate-gemini-backend && npm run dev`
+2. Open the frontend and click the "AI Assistant" button in the navbar
+3. Ask questions about Algorand, smart contracts, or DeFi concepts
+
+The AI assistant is powered by Google's Gemini 2.5 Flash model and provides accurate, helpful responses about blockchain technology and Algorand-specific features.
 
 ## Next Steps
 
