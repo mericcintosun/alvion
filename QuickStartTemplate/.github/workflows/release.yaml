@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+      - '.idea/**'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  QuickStartTemplate-contracts-validate:
+    name: Run QuickStartTemplate-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/QuickStartTemplate-contracts-ci.yaml
+
+  QuickStartTemplate-contracts-release:
+    name: Run QuickStartTemplate-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/QuickStartTemplate-contracts-cd.yaml
+    needs: QuickStartTemplate-contracts-validate
+
+  QuickStartTemplate-frontend-validate:
+    name: Run QuickStartTemplate-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/QuickStartTemplate-frontend-ci.yaml
+
+  QuickStartTemplate-frontend-release:
+    name: Run QuickStartTemplate-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/QuickStartTemplate-frontend-cd.yaml
+    needs: QuickStartTemplate-frontend-validate

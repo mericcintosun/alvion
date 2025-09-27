@@ -1,0 +1,14 @@
+name: Pull Request validation
+
+on: [pull_request]
+
+
+jobs:
+  QuickStartTemplate-contracts-ci:
+    name: Run QuickStartTemplate-contracts validation
+    uses: ./.github/workflows/QuickStartTemplate-contracts-ci.yaml
+
+  QuickStartTemplate-frontend-ci:
+    name: Run QuickStartTemplate-frontend validation
+    uses: ./.github/workflows/QuickStartTemplate-frontend-ci.yaml
+

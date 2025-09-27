@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@algorandfoundation/algokit-client-generator": "^6.0.0"
+  },
+  "dependencies": {
+    "react-icons": "^5.5.0"
+  }
+}

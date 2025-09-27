@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 2.1.6
+_src_path: gh:algorandfoundation/algokit-fullstack-template
+author_email: 127313669+Ganainmtech@users.noreply.github.com
+author_name: Sara Jane (SJ)
+cloud_provider: none
+contract_name: hello_world
+preset_name: production
+project_name: QuickStartTemplate
+
