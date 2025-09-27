@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Alvion Custom Styles */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    background: #ffffff;
+    min-height: 100vh;
+    transition: background-color 0.3s ease;
+  }
+
+  .dark body {
+    background: #001324;
+  }
+}
+
+@layer components {
+  .alvion-card {
+    @apply bg-alvion-neutral-light-90 dark:bg-alvion-neutral-dark-90 border border-alvion-neutral-light-70 dark:border-alvion-neutral-dark-70 rounded-alvion-lg;
+  }
+
+  .alvion-button {
+    @apply bg-alvion-primary-100 hover:bg-alvion-primary-90 text-white font-semibold transition-all duration-200 rounded-alvion;
+  }
+
+  .alvion-text-primary {
+    @apply text-alvion-primary-100 dark:text-alvion-primary-dark-100;
+  }
+
+  .alvion-navbar {
+    @apply bg-alvion-neutral-light-90 dark:bg-alvion-neutral-dark-90 border-b border-alvion-neutral-light-70 dark:border-alvion-neutral-dark-70;
+  }
+
+  .alvion-text {
+    @apply text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10;
+  }
+
+  .alvion-text-muted {
+    @apply text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40;
+  }
+}

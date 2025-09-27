@@ -117,91 +117,96 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
   // Modal UI
   // ------------------------------
   return (
-    <dialog
-      id="transact_modal"
-      className={`modal modal-bottom sm:modal-middle backdrop-blur-sm ${openModal ? 'modal-open' : ''}`}
-    >
-      <div className="modal-box bg-neutral-800 text-gray-100 rounded-2xl shadow-xl border border-neutral-700 p-6">
-        <h3 className="flex items-center gap-3 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-500 mb-6">
-          <AiOutlineSend className="text-3xl" />
-          Send a Payment
-        </h3>
+    <>
+      {openModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+          <div className="bg-alvion-neutral-light-90 dark:bg-alvion-neutral-dark-90 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 rounded-alvion-lg shadow-xl border border-alvion-neutral-light-70 dark:border-alvion-neutral-dark-70 p-6 max-w-md w-full mx-4">
+            <h3 className="flex items-center gap-3 text-2xl font-bold text-alvion-primary-100 dark:text-alvion-primary-dark-100 mb-6">
+              <AiOutlineSend className="text-3xl" />
+              Send a Payment
+            </h3>
 
-        {/* Receiver Address input */}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text text-gray-400">Receiver's Address</span>
-          </label>
-          <input
-            type="text"
-            data-test-id="receiver-address"
-            className="input input-bordered w-full bg-neutral-700 text-gray-100 border-neutral-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
-            placeholder="e.g., KPLX..."
-            value={receiverAddress}
-            onChange={(e) => setReceiverAddress(e.target.value)}
-          />
-          {/* Address length check for Algorand (58 chars) */}
-          <div className="flex justify-between items-center text-xs mt-2">
-            <span className="text-gray-500">Amount: 1 {assetType}</span>
-            <span className={`font-mono ${receiverAddress.length === 58 ? 'text-green-400' : 'text-red-400'}`}>
-              {receiverAddress.length}/58
-            </span>
-          </div>
-        </div>
+            {/* Receiver Address input */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40">Receiver's Address</span>
+              </label>
+              <input
+                type="text"
+                data-test-id="receiver-address"
+                className="input input-bordered w-full bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 border-alvion-neutral-light-60 dark:border-alvion-neutral-dark-60 focus:outline-none focus:border-alvion-primary-100 dark:focus:border-alvion-primary-dark-100 focus:ring-1 focus:ring-alvion-primary-100 dark:focus:ring-alvion-primary-dark-100 rounded-alvion"
+                placeholder="e.g., KPLX..."
+                value={receiverAddress}
+                onChange={(e) => setReceiverAddress(e.target.value)}
+              />
+              {/* Address length check for Algorand (58 chars) */}
+              <div className="flex justify-between items-center text-xs mt-2">
+                <span className="text-alvion-neutral-light-50 dark:text-alvion-neutral-dark-50">Amount: 1 {assetType}</span>
+                <span className={`font-mono ${receiverAddress.length === 58 ? 'text-green-500' : 'text-red-500'}`}>
+                  {receiverAddress.length}/58
+                </span>
+              </div>
+            </div>
 
-        {/* Toggle ALGO ↔ USDC */}
-        <div className="flex justify-center gap-4 mt-4">
-          <button
-            type="button"
-            className={`px-4 py-2 rounded-lg font-semibold transition ${
-              assetType === 'ALGO' ? 'bg-cyan-600 text-white' : 'bg-neutral-700 text-gray-300 hover:bg-neutral-600'
-            }`}
-            onClick={() => setAssetType('ALGO')}
-          >
-            ALGO
-          </button>
-          <button
-            type="button"
-            className={`px-4 py-2 rounded-lg font-semibold transition ${
-              assetType === 'USDC' ? 'bg-cyan-600 text-white' : 'bg-neutral-700 text-gray-300 hover:bg-neutral-600'
-            }`}
-            onClick={() => setAssetType('USDC')}
-          >
-            USDC
-          </button>
-        </div>
+            {/* Toggle ALGO ↔ USDC */}
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                type="button"
+                className={`px-4 py-2 rounded-alvion font-semibold transition ${
+                  assetType === 'ALGO'
+                    ? 'bg-alvion-primary-100 text-white'
+                    : 'bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 hover:bg-alvion-neutral-light-70 dark:hover:bg-alvion-neutral-dark-70'
+                }`}
+                onClick={() => setAssetType('ALGO')}
+              >
+                ALGO
+              </button>
+              <button
+                type="button"
+                className={`px-4 py-2 rounded-alvion font-semibold transition ${
+                  assetType === 'USDC'
+                    ? 'bg-alvion-primary-100 text-white'
+                    : 'bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 hover:bg-alvion-neutral-light-70 dark:hover:bg-alvion-neutral-dark-70'
+                }`}
+                onClick={() => setAssetType('USDC')}
+              >
+                USDC
+              </button>
+            </div>
 
-        {/* Action buttons */}
-        <div className="modal-action mt-6 flex flex-col-reverse sm:flex-row-reverse gap-3">
-          <button
-            data-test-id="send"
-            type="button"
-            className={`
-              btn w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white rounded-xl border-none font-semibold transition-all duration-300 transform active:scale-95
+            {/* Action buttons */}
+            <div className="flex flex-col-reverse sm:flex-row-reverse gap-3 mt-6">
+              <button
+                data-test-id="send"
+                type="button"
+                className={`
+              btn w-full sm:w-auto bg-alvion-primary-100 hover:bg-alvion-primary-90 text-white rounded-alvion border-none font-semibold transition-all duration-300 transform active:scale-95
               ${receiverAddress.length === 58 ? '' : 'btn-disabled opacity-50 cursor-not-allowed'}
             `}
-            onClick={handleSubmit}
-            disabled={loading || receiverAddress.length !== 58}
-          >
-            {loading ? (
-              <span className="flex items-center gap-2">
-                <AiOutlineLoading3Quarters className="animate-spin" />
-                Sending...
-              </span>
-            ) : (
-              `Send 1 ${assetType}`
-            )}
-          </button>
-          <button
-            type="button"
-            className="btn w-full sm:w-auto bg-neutral-700 hover:bg-neutral-600 border-none text-gray-300 rounded-xl"
-            onClick={() => setModalState(false)}
-          >
-            Close
-          </button>
+                onClick={handleSubmit}
+                disabled={loading || receiverAddress.length !== 58}
+              >
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                    Sending...
+                  </span>
+                ) : (
+                  `Send 1 ${assetType}`
+                )}
+              </button>
+              <button
+                type="button"
+                className="btn w-full sm:w-auto bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 hover:bg-alvion-neutral-light-70 dark:hover:bg-alvion-neutral-dark-70 border-none text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 rounded-alvion"
+                onClick={() => setModalState(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </dialog>
+      )}
+    </>
   )
 }
 

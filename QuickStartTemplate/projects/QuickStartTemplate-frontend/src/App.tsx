@@ -1,6 +1,7 @@
 import { SupportedWallet, WalletId, WalletManager, WalletProvider } from '@txnlab/use-wallet-react'
 import { SnackbarProvider } from 'notistack'
 import Home from './Home'
+import { DarkModeProvider } from './contexts/DarkModeContext'
 import { getAlgodConfigFromViteEnvironment, getKmdConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
 
 let supportedWallets: SupportedWallet[]
@@ -47,10 +48,14 @@ export default function App() {
   })
 
   return (
-    <SnackbarProvider maxSnack={3}>
-      <WalletProvider manager={walletManager}>
-        <Home />
-      </WalletProvider>
-    </SnackbarProvider>
+    <DarkModeProvider>
+      <div className="min-h-screen bg-alvion-neutral-light-100 dark:bg-alvion-neutral-dark-100 font-alvion transition-colors duration-300">
+        <SnackbarProvider maxSnack={3}>
+          <WalletProvider manager={walletManager}>
+            <Home />
+          </WalletProvider>
+        </SnackbarProvider>
+      </div>
+    </DarkModeProvider>
   )
 }

@@ -18,9 +18,9 @@ interface TokenMintProps {
 const Tokenmint = ({ openModal, setModalState }: TokenMintProps) => {
   // 👇 Default placeholder values (safe customization points for learners)
   const [assetName, setAssetName] = useState<string>('MasterPass Token') // token name
-  const [unitName, setUnitName] = useState<string>('MPT')               // short ticker
-  const [total, setTotal] = useState<string>('1000')                    // human-readable total
-  const [decimals, setDecimals] = useState<string>('0')                 // 0 = whole tokens only
+  const [unitName, setUnitName] = useState<string>('MPT') // short ticker
+  const [total, setTotal] = useState<string>('1000') // human-readable total
+  const [decimals, setDecimals] = useState<string>('0') // 0 = whole tokens only
 
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -71,8 +71,8 @@ const Tokenmint = ({ openModal, setModalState }: TokenMintProps) => {
         signer: transactionSigner,
         total: onChainTotal,
         decimals: Number(decimalsBig),
-        assetName,   // <— customize token name
-        unitName,    // <— customize unit/ticker
+        assetName, // <— customize token name
+        unitName, // <— customize unit/ticker
         defaultFrozen: false,
       })
 
@@ -95,114 +95,117 @@ const Tokenmint = ({ openModal, setModalState }: TokenMintProps) => {
   // Modal UI
   // ------------------------------
   return (
-    <dialog
-      id="token_modal"
-      className={`modal modal-bottom sm:modal-middle backdrop-blur-sm ${openModal ? 'modal-open' : ''}`}
-    >
-      <div className="modal-box bg-neutral-800 text-gray-100 rounded-2xl shadow-xl border border-neutral-700 p-6">
-        <h3 className="flex items-center gap-3 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-500 mb-2">
-          <BsCoin className="text-3xl" />
-          Create a MasterPass Token
-        </h3>
-        <p className="text-gray-400 text-sm mb-6">
-          This creates a standard fungible token (ASA) on the Algorand TestNet.
-        </p>
+    <>
+      {openModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+          <div className="bg-alvion-neutral-light-90 dark:bg-alvion-neutral-dark-90 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 rounded-alvion-lg shadow-xl border border-alvion-neutral-light-70 dark:border-alvion-neutral-dark-70 p-6 max-w-md w-full mx-4">
+            <h3 className="flex items-center gap-3 text-2xl font-bold text-alvion-primary-100 dark:text-alvion-primary-dark-100 mb-2">
+              <BsCoin size={48} color="#2D2DF1" />
+              Create a MasterPass Token
+            </h3>
+            <p className="text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40 text-sm mb-6">
+              This creates a standard fungible token (ASA) on the Algorand TestNet.
+            </p>
 
-        {/* Input fields for customization */}
-        <div className="space-y-4">
-          {/* Asset Name */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text text-gray-400">Asset Name</span>
-            </label>
-            <input
-              type="text"
-              className="input input-bordered w-full bg-neutral-700 text-gray-100 border-neutral-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
-              placeholder="e.g., MasterPass Token"
-              value={assetName}
-              onChange={(e) => setAssetName(e.target.value)}
-            />
-          </div>
+            {/* Input fields for customization */}
+            <div className="space-y-4">
+              {/* Asset Name */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40">Asset Name</span>
+                </label>
+                <input
+                  type="text"
+                  className="input input-bordered w-full bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 border-alvion-neutral-light-60 dark:border-alvion-neutral-dark-60 focus:outline-none focus:border-alvion-primary-100 dark:focus:border-alvion-primary-dark-100 focus:ring-1 focus:ring-alvion-primary-100 dark:focus:ring-alvion-primary-dark-100 rounded-alvion"
+                  placeholder="e.g., MasterPass Token"
+                  value={assetName}
+                  onChange={(e) => setAssetName(e.target.value)}
+                />
+              </div>
 
-          {/* Unit Name */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text text-gray-400">Unit Name</span>
-            </label>
-            <input
-              type="text"
-              className="input input-bordered w-full bg-neutral-700 text-gray-100 border-neutral-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
-              placeholder="e.g., MPT"
-              value={unitName}
-              onChange={(e) => setUnitName(e.target.value)}
-            />
-          </div>
+              {/* Unit Name */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40">Unit Name</span>
+                </label>
+                <input
+                  type="text"
+                  className="input input-bordered w-full bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 border-alvion-neutral-light-60 dark:border-alvion-neutral-dark-60 focus:outline-none focus:border-alvion-primary-100 dark:focus:border-alvion-primary-dark-100 focus:ring-1 focus:ring-alvion-primary-100 dark:focus:ring-alvion-primary-dark-100 rounded-alvion"
+                  placeholder="e.g., MPT"
+                  value={unitName}
+                  onChange={(e) => setUnitName(e.target.value)}
+                />
+              </div>
 
-          {/* Total Supply */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text text-gray-400">Total Supply</span>
-            </label>
-            <input
-              type="number"
-              min={1}
-              className="input input-bordered w-full bg-neutral-700 text-gray-100 border-neutral-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
-              placeholder="e.g., 1000"
-              value={total}
-              onChange={(e) => setTotal(e.target.value)}
-            />
-          </div>
+              {/* Total Supply */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40">Total Supply</span>
+                </label>
+                <input
+                  type="number"
+                  min={1}
+                  className="input input-bordered w-full bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 border-alvion-neutral-light-60 dark:border-alvion-neutral-dark-60 focus:outline-none focus:border-alvion-primary-100 dark:focus:border-alvion-primary-dark-100 focus:ring-1 focus:ring-alvion-primary-100 dark:focus:ring-alvion-primary-dark-100 rounded-alvion"
+                  placeholder="e.g., 1000"
+                  value={total}
+                  onChange={(e) => setTotal(e.target.value)}
+                />
+              </div>
 
-          {/* Decimals */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text text-gray-400">Decimals</span>
-            </label>
-            <input
-              type="number"
-              min={0}
-              max={19}
-              className="input input-bordered w-full bg-neutral-700 text-gray-100 border-neutral-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
-              placeholder="0 for whole tokens"
-              value={decimals}
-              onChange={(e) => setDecimals(e.target.value)}
-            />
-            <div className="flex items-center gap-1 mt-2 text-xs text-gray-500">
-              <AiOutlineInfoCircle />
-              <p>On-chain total = <code>total × 10^decimals</code>.</p>
+              {/* Decimals */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40">Decimals</span>
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  max={19}
+                  className="input input-bordered w-full bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 border-alvion-neutral-light-60 dark:border-alvion-neutral-dark-60 focus:outline-none focus:border-alvion-primary-100 dark:focus:border-alvion-primary-dark-100 focus:ring-1 focus:ring-alvion-primary-100 dark:focus:ring-alvion-primary-dark-100 rounded-alvion"
+                  placeholder="0 for whole tokens"
+                  value={decimals}
+                  onChange={(e) => setDecimals(e.target.value)}
+                />
+                <div className="flex items-center gap-1 mt-2 text-xs text-alvion-neutral-light-50 dark:text-alvion-neutral-dark-50">
+                  <AiOutlineInfoCircle size={16} color="#6B7280" />
+                  <p>
+                    On-chain total = <code>total × 10^decimals</code>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex flex-col-reverse sm:flex-row-reverse gap-3 mt-6">
+              <button
+                type="button"
+                className={`btn w-full sm:w-auto bg-alvion-primary-100 hover:bg-alvion-primary-90 text-white rounded-alvion border-none font-semibold ${
+                  assetName && unitName && total ? '' : 'btn-disabled opacity-50 cursor-not-allowed'
+                }`}
+                onClick={handleMintToken}
+                disabled={loading || !assetName || !unitName || !total}
+              >
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <AiOutlineLoading3Quarters size={20} />
+                    Creating...
+                  </span>
+                ) : (
+                  'Create Token'
+                )}
+              </button>
+              <button
+                type="button"
+                className="btn w-full sm:w-auto bg-alvion-neutral-light-80 dark:bg-alvion-neutral-dark-80 hover:bg-alvion-neutral-light-70 dark:hover:bg-alvion-neutral-dark-70 border-none text-alvion-neutral-light-10 dark:text-alvion-neutral-dark-10 rounded-alvion"
+                onClick={() => setModalState(false)}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
-
-        {/* Action buttons */}
-        <div className="modal-action mt-6 flex flex-col-reverse sm:flex-row-reverse gap-3">
-          <button
-            type="button"
-            className={`btn w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white rounded-xl border-none font-semibold ${
-              assetName && unitName && total ? '' : 'btn-disabled opacity-50 cursor-not-allowed'
-            }`}
-            onClick={handleMintToken}
-            disabled={loading || !assetName || !unitName || !total}
-          >
-            {loading ? (
-              <span className="flex items-center gap-2">
-                <AiOutlineLoading3Quarters className="animate-spin" />
-                Creating...
-              </span>
-            ) : (
-              'Create Token'
-            )}
-          </button>
-          <button
-            type="button"
-            className="btn w-full sm:w-auto bg-neutral-700 hover:bg-neutral-600 border-none text-gray-300 rounded-xl"
-            onClick={() => setModalState(false)}
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </dialog>
+      )}
+    </>
   )
 }
 
