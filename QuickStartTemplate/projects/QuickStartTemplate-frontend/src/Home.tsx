@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react'
 import { useWallet } from '@txnlab/use-wallet-react'
-import { AiOutlineSend, AiOutlineStar, AiOutlineDeploymentUnit, AiOutlineRobot } from 'react-icons/ai'
+import { AiOutlineSend, AiOutlineStar, AiOutlineDeploymentUnit, AiOutlineRobot, AiOutlinePlayCircle } from 'react-icons/ai'
 import { BsArrowUpRightCircle, BsWallet2 } from 'react-icons/bs'
 
 // Frontend modals
@@ -14,6 +14,8 @@ import NFTmint from './components/NFTmint'
 import Tokenmint from './components/Tokenmint'
 import DarkModeToggle from './components/DarkModeToggle'
 import ChatBot from './components/ChatBot'
+import AlvionDeFiCopilot from './components/AlvionDeFiCopilot'
+import AlvionTestSuite from './components/AlvionTestSuite'
 
 // Smart contract demo modal (backend app calls)
 import AppCalls from './components/AppCalls'
@@ -27,6 +29,8 @@ const Home: React.FC<HomeProps> = () => {
   const [openTokenModal, setOpenTokenModal] = useState<boolean>(false)
   const [openAppCallsModal, setOpenAppCallsModal] = useState<boolean>(false)
   const [openChatModal, setOpenChatModal] = useState<boolean>(false)
+  const [openDeFiCopilotModal, setOpenDeFiCopilotModal] = useState<boolean>(false)
+  const [openTestSuiteModal, setOpenTestSuiteModal] = useState<boolean>(false)
 
   const { activeAddress } = useWallet()
 
@@ -57,11 +61,30 @@ const Home: React.FC<HomeProps> = () => {
       {/* ---------------- Hero Section ---------------- */}
       <header className="text-center py-10 px-4">
         <h2 className="text-4xl sm:text-5xl font-extrabold text-alvion-primary-100 dark:text-alvion-primary-dark-100 mb-4">
-          AI-Powered DeFi Assistant
+          Alvion DeFi Copilot
         </h2>
-        <p className="text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40 max-w-2xl mx-auto">
-          Where AI meets DeFi. Connect your wallet and experience intelligent portfolio management with natural language commands.
+        <p className="text-alvion-neutral-light-40 dark:text-alvion-neutral-dark-40 max-w-2xl mx-auto mb-6">
+          AI-powered DeFi assistant that combines intelligent portfolio management with agentic rebalancing. Give instructions in Turkish
+          and let Alvion handle the rest.
         </p>
+        {activeAddress && (
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => setOpenDeFiCopilotModal(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-alvion bg-alvion-primary-100 hover:bg-alvion-primary-90 text-white font-semibold transition-colors duration-200"
+            >
+              <AiOutlineRobot size={20} />
+              <span>Open DeFi Copilot</span>
+            </button>
+            <button
+              onClick={() => setOpenTestSuiteModal(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-alvion bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors duration-200"
+            >
+              <AiOutlinePlayCircle size={20} />
+              <span>Test Suite</span>
+            </button>
+          </div>
+        )}
       </header>
 
       {/* ---------------- Features Grid ---------------- */}
@@ -146,6 +169,8 @@ const Home: React.FC<HomeProps> = () => {
       <Tokenmint openModal={openTokenModal} setModalState={setOpenTokenModal} />
       <AppCalls openModal={openAppCallsModal} setModalState={setOpenAppCallsModal} />
       <ChatBot openModal={openChatModal} setModalState={setOpenChatModal} />
+      <AlvionDeFiCopilot openModal={openDeFiCopilotModal} setModalState={setOpenDeFiCopilotModal} />
+      <AlvionTestSuite openModal={openTestSuiteModal} setModalState={setOpenTestSuiteModal} />
     </div>
   )
 }

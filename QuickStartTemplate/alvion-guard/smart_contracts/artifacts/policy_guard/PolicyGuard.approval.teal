@@ -1,0 +1,657 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1 2 6
+    bytecblock "max_amt" "max_fee" "t_router" "max_slip" "folks_dep" "folks_stk" "t_pool" "creator"
+    txn ApplicationID
+    bnz main_after_if_else@2
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:29
+    // maxFeeMicroAlgo = GlobalState<uint64>({ key: Bytes("max_fee"),    initialValue: Uint64(200_000) });
+    bytec_1 // "max_fee"
+    pushint 200000 // 200000
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:30
+    // maxAmountMicroAlgo = GlobalState<uint64>({ key: Bytes("max_amt"),  initialValue: Uint64(1_000_000_000) });
+    bytec_0 // "max_amt"
+    pushint 1000000000 // 1000000000
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:31
+    // maxSlippageBps    = GlobalState<uint64>({ key: Bytes("max_slip"),  initialValue: Uint64(50) }); // %0.50
+    bytec_3 // "max_slip"
+    pushint 50 // 50
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:34
+    // folksDepositApp  = GlobalState<Application>({ key: Bytes("folks_dep"),  initialValue: Application() });
+    bytec 4 // "folks_dep"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:35
+    // folksStakingApp  = GlobalState<Application>({ key: Bytes("folks_stk"),  initialValue: Application() });
+    bytec 5 // "folks_stk"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:36
+    // tinymanRouterApp = GlobalState<Application>({ key: Bytes("t_router"),   initialValue: Application() });
+    bytec_2 // "t_router"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:37
+    // tinymanPoolApp   = GlobalState<Application>({ key: Bytes("t_pool"),     initialValue: Application() });
+    bytec 6 // "t_pool"
+    intc_0 // 0
+    app_global_put
+
+main_after_if_else@2:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:25
+    // export default class PolicyGuard extends arc4.Contract {
+    txn NumAppArgs
+    bz main_after_if_else@12
+    pushbytess 0x69443df7 0x421cfd42 0x370c7072 0xc3b204b3 // method "init(uint64,uint64,uint64)void", method "setAllowedApps(application,application,application,application)void", method "updatePolicy(uint64,uint64,uint64)void", method "enforce()void"
+    txna ApplicationArgs 0
+    match main_init_route@5 main_setAllowedApps_route@6 main_updatePolicy_route@7 main_enforce_route@8
+
+main_after_if_else@12:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:25
+    // export default class PolicyGuard extends arc4.Contract {
+    intc_0 // 0
+    return
+
+main_enforce_route@8:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:75
+    // @arc4.abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub enforce
+    intc_1 // 1
+    return
+
+main_updatePolicy_route@7:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:65
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:25
+    // export default class PolicyGuard extends arc4.Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:65
+    // @arc4.abimethod()
+    callsub updatePolicy
+    intc_1 // 1
+    return
+
+main_setAllowedApps_route@6:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:51
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:25
+    // export default class PolicyGuard extends arc4.Contract {
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txnas Applications
+    txna ApplicationArgs 4
+    btoi
+    txnas Applications
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:51
+    // @arc4.abimethod()
+    callsub setAllowedApps
+    intc_1 // 1
+    return
+
+main_init_route@5:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:42
+    // @arc4.abimethod({ onCreate: "allow" }) // "allow" | "disallow" | "require"
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:25
+    // export default class PolicyGuard extends arc4.Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:42
+    // @arc4.abimethod({ onCreate: "allow" }) // "allow" | "disallow" | "require"
+    callsub init
+    intc_1 // 1
+    return
+
+
+// smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts::PolicyGuard.init(maxFee: uint64, maxAmount: uint64, maxSlipBps: uint64) -> void:
+init:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:42-43
+    // @arc4.abimethod({ onCreate: "allow" }) // "allow" | "disallow" | "require"
+    // public init(maxFee: uint64, maxAmount: uint64, maxSlipBps: uint64): void {
+    proto 3 0
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:27
+    // creator = GlobalState<Account>({ key: Bytes("creator") });
+    bytec 7 // "creator"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:44
+    // this.creator.value = Txn.sender;
+    txn Sender
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:29
+    // maxFeeMicroAlgo = GlobalState<uint64>({ key: Bytes("max_fee"),    initialValue: Uint64(200_000) });
+    bytec_1 // "max_fee"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:45
+    // this.maxFeeMicroAlgo.value   = maxFee;
+    frame_dig -3
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:30
+    // maxAmountMicroAlgo = GlobalState<uint64>({ key: Bytes("max_amt"),  initialValue: Uint64(1_000_000_000) });
+    bytec_0 // "max_amt"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:46
+    // this.maxAmountMicroAlgo.value= maxAmount;
+    frame_dig -2
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:31
+    // maxSlippageBps    = GlobalState<uint64>({ key: Bytes("max_slip"),  initialValue: Uint64(50) }); // %0.50
+    bytec_3 // "max_slip"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:47
+    // this.maxSlippageBps.value    = maxSlipBps;
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts::PolicyGuard.setAllowedApps(folksDeposit: uint64, folksStaking: uint64, tinymanRouter: uint64, tinymanPool: uint64) -> void:
+setAllowedApps:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:51-57
+    // @arc4.abimethod()
+    // public setAllowedApps(
+    //   folksDeposit: Application,
+    //   folksStaking: Application,
+    //   tinymanRouter: Application,
+    //   tinymanPool: Application,
+    // ): void {
+    proto 4 0
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:58
+    // assert(Txn.sender === this.creator.value, "Only creator");
+    txn Sender
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:27
+    // creator = GlobalState<Account>({ key: Bytes("creator") });
+    intc_0 // 0
+    bytec 7 // "creator"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:58
+    // assert(Txn.sender === this.creator.value, "Only creator");
+    ==
+    assert // Only creator
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:34
+    // folksDepositApp  = GlobalState<Application>({ key: Bytes("folks_dep"),  initialValue: Application() });
+    bytec 4 // "folks_dep"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:59
+    // this.folksDepositApp.value  = folksDeposit;
+    frame_dig -4
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:35
+    // folksStakingApp  = GlobalState<Application>({ key: Bytes("folks_stk"),  initialValue: Application() });
+    bytec 5 // "folks_stk"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:60
+    // this.folksStakingApp.value  = folksStaking;
+    frame_dig -3
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:36
+    // tinymanRouterApp = GlobalState<Application>({ key: Bytes("t_router"),   initialValue: Application() });
+    bytec_2 // "t_router"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:61
+    // this.tinymanRouterApp.value = tinymanRouter;
+    frame_dig -2
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:37
+    // tinymanPoolApp   = GlobalState<Application>({ key: Bytes("t_pool"),     initialValue: Application() });
+    bytec 6 // "t_pool"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:62
+    // this.tinymanPoolApp.value   = tinymanPool;
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts::PolicyGuard.updatePolicy(maxFee: uint64, maxAmount: uint64, maxSlipBps: uint64) -> void:
+updatePolicy:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:65-66
+    // @arc4.abimethod()
+    // public updatePolicy(maxFee: uint64, maxAmount: uint64, maxSlipBps: uint64): void {
+    proto 3 0
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:67
+    // assert(Txn.sender === this.creator.value, "Only creator");
+    txn Sender
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:27
+    // creator = GlobalState<Account>({ key: Bytes("creator") });
+    intc_0 // 0
+    bytec 7 // "creator"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:67
+    // assert(Txn.sender === this.creator.value, "Only creator");
+    ==
+    assert // Only creator
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:29
+    // maxFeeMicroAlgo = GlobalState<uint64>({ key: Bytes("max_fee"),    initialValue: Uint64(200_000) });
+    bytec_1 // "max_fee"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:68
+    // this.maxFeeMicroAlgo.value    = maxFee;
+    frame_dig -3
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:30
+    // maxAmountMicroAlgo = GlobalState<uint64>({ key: Bytes("max_amt"),  initialValue: Uint64(1_000_000_000) });
+    bytec_0 // "max_amt"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:69
+    // this.maxAmountMicroAlgo.value = maxAmount;
+    frame_dig -2
+    app_global_put
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:31
+    // maxSlippageBps    = GlobalState<uint64>({ key: Bytes("max_slip"),  initialValue: Uint64(50) }); // %0.50
+    bytec_3 // "max_slip"
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:70
+    // this.maxSlippageBps.value     = maxSlipBps;
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts::PolicyGuard.enforce() -> void:
+enforce:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:75-76
+    // @arc4.abimethod({ readonly: true })
+    // public enforce(): void {
+    proto 0 0
+    intc_0 // 0
+    pushbytes ""
+    dupn 4
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:77
+    // const n = op.Global.groupSize;
+    global GroupSize
+    dupn 2
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:79
+    // assert(n >= Uint64(2),  "group too small");
+    intc_2 // 2
+    >=
+    assert // group too small
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:80
+    // assert(n <= Uint64(16), "group too large");
+    pushint 16 // 16
+    <=
+    assert // group too large
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:83
+    // let totalFee = Uint64(0);
+    intc_0 // 0
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:84
+    // let i = Uint64(0);
+    dup
+
+enforce_while_top@1:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:85
+    // while (i < n) {
+    frame_dig 8
+    frame_dig 6
+    <
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:85-89
+    // while (i < n) {
+    //   const t = gtxn.Transaction(i);
+    //   totalFee = totalFee + t.fee;
+    //   i = i + Uint64(1);
+    // }
+    bz enforce_after_while@3
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:87
+    // totalFee = totalFee + t.fee;
+    frame_dig 8
+    dup
+    gtxns Fee
+    frame_dig 7
+    +
+    frame_bury 7
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:88
+    // i = i + Uint64(1);
+    intc_1 // 1
+    +
+    frame_bury 8
+    b enforce_while_top@1
+
+enforce_after_while@3:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:29
+    // maxFeeMicroAlgo = GlobalState<uint64>({ key: Bytes("max_fee"),    initialValue: Uint64(200_000) });
+    intc_0 // 0
+    bytec_1 // "max_fee"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:90
+    // assert(totalFee <= this.maxFeeMicroAlgo.value, "total fee too high");
+    frame_dig 7
+    >=
+    assert // total fee too high
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:93
+    // let hasAllowed = false;
+    intc_0 // 0
+    frame_bury 2
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:94
+    // i = Uint64(0);
+    intc_0 // 0
+    frame_bury 8
+
+enforce_while_top@4:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:95
+    // while (i < n) {
+    frame_dig 8
+    frame_dig 6
+    <
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:95-119
+    // while (i < n) {
+    //   const t = gtxn.Transaction(i);
+    //   if (t.type === TransactionType.ApplicationCall) {
+    //     const appCall = gtxn.ApplicationCallTxn(i);
+    //     const appId = appCall.appId;
+    //     if (
+    //       appId === this.folksDepositApp.value  ||
+    //       appId === this.folksStakingApp.value  ||
+    //       appId === this.tinymanRouterApp.value ||
+    //       appId === this.tinymanPoolApp.value
+    //     ) {
+    //       hasAllowed = true;
+    // 
+    //       // Tinyman Router ise minOut sanity: arg[1] > 0
+    //       if (appId === this.tinymanRouterApp.value) {
+    //         assert(appCall.numAppArgs >= Uint64(2), "router args");
+    //         const minOut = op.btoi(appCall.appArgs(Uint64(1))); // bytes -> uint64
+    //         assert(minOut > Uint64(0), "minOut=0");
+    //         // Not: gerçek slippage formülü için quotedOut girişi gerekir; zincir üstünde yoksa
+    //         // AI ajan, tx oluştururken minOut'u policy'den türetilmiş eşiğe göre ayarlamalı.  [oai_citation:3‡Algorand Developer Portal](https://dev.algorand.co/reference/algorand-typescript/api-reference/op/functions/btoi/?utm_source=chatgpt.com)
+    //       }
+    //     }
+    //   }
+    //   i = i + Uint64(1);
+    // }
+    bz enforce_after_while@15
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:97
+    // if (t.type === TransactionType.ApplicationCall) {
+    frame_dig 8
+    gtxns TypeEnum
+    dup
+    frame_bury 5
+    intc_3 // 6
+    ==
+    frame_dig 2
+    frame_bury 3
+    bz enforce_after_if_else@14
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:98
+    // const appCall = gtxn.ApplicationCallTxn(i);
+    frame_dig 5
+    intc_3 // appl
+    ==
+    assert // transaction type is appl
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:99
+    // const appId = appCall.appId;
+    frame_dig 8
+    gtxns ApplicationID
+    dup
+    frame_bury 1
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:34
+    // folksDepositApp  = GlobalState<Application>({ key: Bytes("folks_dep"),  initialValue: Application() });
+    intc_0 // 0
+    bytec 4 // "folks_dep"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:101
+    // appId === this.folksDepositApp.value  ||
+    ==
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:101-102
+    // appId === this.folksDepositApp.value  ||
+    // appId === this.folksStakingApp.value  ||
+    bnz enforce_if_body@10
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:35
+    // folksStakingApp  = GlobalState<Application>({ key: Bytes("folks_stk"),  initialValue: Application() });
+    intc_0 // 0
+    bytec 5 // "folks_stk"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:102
+    // appId === this.folksStakingApp.value  ||
+    frame_dig 1
+    ==
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:101-102
+    // appId === this.folksDepositApp.value  ||
+    // appId === this.folksStakingApp.value  ||
+    bnz enforce_if_body@10
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:36
+    // tinymanRouterApp = GlobalState<Application>({ key: Bytes("t_router"),   initialValue: Application() });
+    intc_0 // 0
+    bytec_2 // "t_router"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:103
+    // appId === this.tinymanRouterApp.value ||
+    frame_dig 1
+    ==
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:101-103
+    // appId === this.folksDepositApp.value  ||
+    // appId === this.folksStakingApp.value  ||
+    // appId === this.tinymanRouterApp.value ||
+    bnz enforce_if_body@10
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:37
+    // tinymanPoolApp   = GlobalState<Application>({ key: Bytes("t_pool"),     initialValue: Application() });
+    intc_0 // 0
+    bytec 6 // "t_pool"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:104
+    // appId === this.tinymanPoolApp.value
+    frame_dig 1
+    ==
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:101-104
+    // appId === this.folksDepositApp.value  ||
+    // appId === this.folksStakingApp.value  ||
+    // appId === this.tinymanRouterApp.value ||
+    // appId === this.tinymanPoolApp.value
+    bz enforce_after_if_else@13
+
+enforce_if_body@10:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:106
+    // hasAllowed = true;
+    intc_1 // 1
+    frame_bury 2
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:36
+    // tinymanRouterApp = GlobalState<Application>({ key: Bytes("t_router"),   initialValue: Application() });
+    intc_0 // 0
+    bytec_2 // "t_router"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:109
+    // if (appId === this.tinymanRouterApp.value) {
+    frame_dig 1
+    ==
+    bz enforce_after_if_else@13
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:110
+    // assert(appCall.numAppArgs >= Uint64(2), "router args");
+    frame_dig 8
+    dup
+    gtxns NumAppArgs
+    intc_2 // 2
+    >=
+    assert // router args
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:111
+    // const minOut = op.btoi(appCall.appArgs(Uint64(1))); // bytes -> uint64
+    intc_1 // 1
+    gtxnsas ApplicationArgs
+    btoi
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:112
+    // assert(minOut > Uint64(0), "minOut=0");
+    assert // minOut=0
+
+enforce_after_if_else@13:
+    frame_dig 2
+    frame_bury 3
+
+enforce_after_if_else@14:
+    frame_dig 3
+    frame_bury 2
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:118
+    // i = i + Uint64(1);
+    frame_dig 8
+    intc_1 // 1
+    +
+    frame_bury 8
+    b enforce_while_top@4
+
+enforce_after_while@15:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:120
+    // assert(hasAllowed, "no allowed application");
+    frame_dig 2
+    assert // no allowed application
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:123
+    // const s0 = gtxn.Transaction(Uint64(0)).sender;
+    intc_0 // 0
+    gtxns Sender
+    frame_bury 0
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:125
+    // i = Uint64(0);
+    intc_0 // 0
+    frame_bury 8
+
+enforce_while_top@16:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:126
+    // while (i < n) {
+    frame_dig 8
+    frame_dig 6
+    <
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:126-142
+    // while (i < n) {
+    //   const t = gtxn.Transaction(i);
+    //   assert(t.sender === s0, "mixed senders");
+    //   assert(t.rekeyTo === Account(), "rekey not allowed");
+    // 
+    //   if (t.type === TransactionType.Payment) {
+    //     const p = gtxn.PaymentTxn(i);
+    //     assert(p.amount <= this.maxAmountMicroAlgo.value, "payment too big");
+    //     assert(p.closeRemainderTo === Account(), "close-to not allowed");
+    //   }
+    //   if (t.type === TransactionType.AssetTransfer) {
+    //     const a = gtxn.AssetTransferTxn(i);
+    //     assert(a.assetAmount <= this.maxAmountMicroAlgo.value, "asset transfer too big");
+    //     assert(a.assetCloseTo === Account(), "asset close-to not allowed");
+    //   }
+    //   i = i + Uint64(1);
+    // }
+    bz enforce_after_while@22
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:128
+    // assert(t.sender === s0, "mixed senders");
+    frame_dig 8
+    dup
+    gtxns Sender
+    frame_dig 0
+    ==
+    assert // mixed senders
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:129
+    // assert(t.rekeyTo === Account(), "rekey not allowed");
+    dup
+    gtxns RekeyTo
+    global ZeroAddress
+    ==
+    assert // rekey not allowed
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:131
+    // if (t.type === TransactionType.Payment) {
+    gtxns TypeEnum
+    dup
+    frame_bury 4
+    intc_1 // 1
+    ==
+    bz enforce_after_if_else@19
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:132
+    // const p = gtxn.PaymentTxn(i);
+    frame_dig 4
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:133
+    // assert(p.amount <= this.maxAmountMicroAlgo.value, "payment too big");
+    frame_dig 8
+    dup
+    gtxns Amount
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:30
+    // maxAmountMicroAlgo = GlobalState<uint64>({ key: Bytes("max_amt"),  initialValue: Uint64(1_000_000_000) });
+    intc_0 // 0
+    bytec_0 // "max_amt"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:133
+    // assert(p.amount <= this.maxAmountMicroAlgo.value, "payment too big");
+    <=
+    assert // payment too big
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:134
+    // assert(p.closeRemainderTo === Account(), "close-to not allowed");
+    gtxns CloseRemainderTo
+    global ZeroAddress
+    ==
+    assert // close-to not allowed
+
+enforce_after_if_else@19:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:136
+    // if (t.type === TransactionType.AssetTransfer) {
+    frame_dig 4
+    pushint 4 // 4
+    ==
+    bz enforce_after_if_else@21
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:137
+    // const a = gtxn.AssetTransferTxn(i);
+    frame_dig 4
+    pushint 4 // axfer
+    ==
+    assert // transaction type is axfer
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:138
+    // assert(a.assetAmount <= this.maxAmountMicroAlgo.value, "asset transfer too big");
+    frame_dig 8
+    dup
+    gtxns AssetAmount
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:30
+    // maxAmountMicroAlgo = GlobalState<uint64>({ key: Bytes("max_amt"),  initialValue: Uint64(1_000_000_000) });
+    intc_0 // 0
+    bytec_0 // "max_amt"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:138
+    // assert(a.assetAmount <= this.maxAmountMicroAlgo.value, "asset transfer too big");
+    <=
+    assert // asset transfer too big
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:139
+    // assert(a.assetCloseTo === Account(), "asset close-to not allowed");
+    gtxns AssetCloseTo
+    global ZeroAddress
+    ==
+    assert // asset close-to not allowed
+
+enforce_after_if_else@21:
+    // smart_contracts/QuickStartTemplate/projects/QuickStartTemplate-contracts/smart_contracts/policy_guard/contract.algo.ts:141
+    // i = i + Uint64(1);
+    frame_dig 8
+    intc_1 // 1
+    +
+    frame_bury 8
+    b enforce_while_top@16
+
+enforce_after_while@22:
+    retsub
